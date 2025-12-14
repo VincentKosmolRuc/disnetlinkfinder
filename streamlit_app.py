@@ -12,9 +12,11 @@ st.set_page_config(
 # ---------- LOAD DATA ----------
 @st.cache_data
 def load_data():
-    return pd.read_csv("https://drive.google.com/uc?id=1x7Ho-iqwZa0i-0SYjVFYS-M_3mWUxOJt&export=download", dtype=str, low_memory=False)
+    url = "https://drive.google.com/uc?id=1x7Ho-iqwZa0i-0SYjVFYS-M_3mWUxOJt&export=download"
+    return pd.read_csv(url, dtype=str, low_memory=False)
 
 df = load_data()
+
 
 SEARCH_COLS = ["Merk+Productnaam", "Artikelnummer", "Barcode"]
 

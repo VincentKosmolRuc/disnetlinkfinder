@@ -37,7 +37,7 @@ def normalize(text):
 st.title("🔎 Disnet Link Finder")
 
 query = st.text_input(
-    "Søg efter disnet product via product navn, barekode eller d-nummer",
+    "Søg efter disnet product via product navn, stregkode eller d-nummer",
     placeholder="e.g. d24091, caruba…"
 )
 
@@ -68,4 +68,4 @@ if query:
 )
 
 else:
-    st.info("Enter a search term to begin.")
+    st.info("Indtast et søgeord for at begynde.")

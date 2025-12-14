@@ -24,7 +24,8 @@ DISPLAY_COLS = [
     "Artikelnummer",
     "Barcode",
     "Merk+Productnaam",
-    "link website"
+    "link website",
+    "Artikelcode"
 ]
 
 # ---------- HELPERS ----------

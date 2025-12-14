@@ -34,11 +34,11 @@ def normalize(text):
     return "".join(c.lower() for c in str(text) if c.isalnum())
 
 # ---------- UI ----------
-st.title("🔎 Product Search")
+st.title("🔎 Disnet Link Finder")
 
 query = st.text_input(
-    "Search by product name, article number, or barcode",
-    placeholder="e.g. fw759, artikelnummer, barcode…"
+    "Søg efter disnet product via product navn, barekode eller d-nummer",
+    placeholder="e.g. d24091, caruba…"
 )
 
 # ---------- SEARCH ----------
@@ -55,16 +55,17 @@ if query:
 
     st.write(f"**Found {len(result)} matching rows**")
 
-    # Make links clickable
-    if "link website" in result.columns:
-        result = result.copy()
-        result["link website"] = result["link website"].apply(
-            lambda x: f"[Open link]({x})" if pd.notna(x) else ""
-        )
 
     st.dataframe(
-        result,
-        use_container_width=True
-    )
+    result,
+    use_container_width=True,
+    column_config={
+        "link website": st.column_config.LinkColumn(
+            label="Website",
+            display_text="Open link"
+        )
+    }
+)
+
 else:
     st.info("Enter a search term to begin.")

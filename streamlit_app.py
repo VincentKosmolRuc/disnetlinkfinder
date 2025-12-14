@@ -18,7 +18,7 @@ def load_data():
 df = load_data()
 
 
-SEARCH_COLS = ["Merk+Productnaam", "Artikelnummer", "Barcode"]
+SEARCH_COLS = ["Merk+Productnaam", "Artikelnummer", "Barcode","Artikelcode"]
 
 DISPLAY_COLS = [
     "Artikelnummer",

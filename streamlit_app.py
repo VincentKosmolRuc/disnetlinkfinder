@@ -12,7 +12,7 @@ st.set_page_config(
 # ---------- LOAD DATA ----------
 @st.cache_data
 def load_data():
-    return pd.read_csv("https://drive.google.com/file/d/1x7Ho-iqwZa0i-0SYjVFYS-M_3mWUxOJt/view?usp=sharing", dtype=str, low_memory=False)
+    return pd.read_csv("https://drive.google.com/uc?id=1x7Ho-iqwZa0i-0SYjVFYS-M_3mWUxOJt&export=download", dtype=str, low_memory=False)
 
 df = load_data()
 

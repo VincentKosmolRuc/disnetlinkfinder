@@ -15,10 +15,25 @@ def load_data():
     url = "https://drive.usercontent.google.com/download?id=1x7Ho-iqwZa0i-0SYjVFYS-M_3mWUxOJt&export=download&confirm=t"
     return pd.read_csv(url, dtype=str, low_memory=False)
 
-df = load_data()
-st.write("RAW column names:")
-for c in df.columns:
-    st.write(repr(c))
+df["__search_merk_en"] = (
+    df["Merk"].fillna("") + " " + df["Productnaam EN"].fillna("")
+)
+
+df["__search_merk_en_norm"] = (
+    df["__search_merk_en"]
+        .str.lower()
+        .str.replace(r"[^a-z0-9]", "", regex=True)
+)
+
+result["Display name"] = (
+    result["Merk"].fillna("") + " " + result["Productnaam EN"].fillna("")
+).str.strip()
+
+result["Display name"] = result["Display name"].where(
+    result["Productnaam EN"].fillna("").str.strip() != "",
+    result["Merk+Productnaam"]
+)
+
 
 
 SEARCH_COLS = ["Merk+Productnaam", "Artikelnummer", "Barcode","Artikelcode"]
@@ -26,10 +41,11 @@ SEARCH_COLS = ["Merk+Productnaam", "Artikelnummer", "Barcode","Artikelcode"]
 DISPLAY_COLS = [
     "Artikelnummer",
     "Barcode",
-    "Merk+Productnaam",
+    "Display name",
     "link website",
     "Artikelcode"
 ]
+
 
 # ---------- HELPERS ----------
 def normalize(text):
@@ -51,11 +67,16 @@ if query:
 
     mask = pd.Series(False, index=df.index)
 
+    # existing columns
     for col in SEARCH_COLS:
-        normalized_col = df[col].apply(normalize)
-        mask |= normalized_col.str.contains(q, na=False)
+        if col in df.columns:
+            mask |= normalize_series(df[col]).str.contains(q, na=False)
+
+    # new combined column
+    mask |= df["__search_merk_en_norm"].str.contains(q, na=False)
+
+    result = df.loc[mask].copy()
     
-    result = df.loc[mask, DISPLAY_COLS]
 
     st.write(f"**Found {len(result)} matching rows**")
 

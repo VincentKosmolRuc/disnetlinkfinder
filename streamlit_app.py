@@ -12,7 +12,7 @@ st.set_page_config(
 # ---------- LOAD DATA ----------
 @st.cache_data
 def load_data():
-    url = "https://drive.google.com/uc?id=1x7Ho-iqwZa0i-0SYjVFYS-M_3mWUxOJt&export=download"
+    url = "https://drive.usercontent.google.com/download?id=1x7Ho-iqwZa0i-0SYjVFYS-M_3mWUxOJt&export=download&confirm=t"
     return pd.read_csv(url, dtype=str, low_memory=False)
 
 df = load_data()

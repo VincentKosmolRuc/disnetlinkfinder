@@ -16,6 +16,9 @@ def load_data():
     return pd.read_csv(url, dtype=str, low_memory=False)
 
 df = load_data()
+st.write("RAW column names:")
+for c in df.columns:
+    st.write(repr(c))
 
 
 SEARCH_COLS = ["Merk+Productnaam", "Artikelnummer", "Barcode","Artikelcode"]

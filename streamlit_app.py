@@ -46,13 +46,13 @@ query = st.text_input(
 if query:
     q = normalize(query)
 
-    mask = False
-    for col in SEARCH_COLS:
-        if col in df.columns:
-            normalized_col = df[col].apply(normalize)
-            mask = mask | normalized_col.str.contains(q, na=False)
+    mask = pd.Series(False, index=df.index)
 
-    result = df[mask][DISPLAY_COLS]
+    for col in SEARCH_COLS:
+        normalized_col = df[col].apply(normalize)
+        mask |= normalized_col.str.contains(q, na=False)
+    
+    result = df.loc[mask, DISPLAY_COLS]
 
     st.write(f"**Found {len(result)} matching rows**")
 
